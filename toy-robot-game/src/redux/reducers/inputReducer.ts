@@ -12,6 +12,7 @@ export interface InputState {
   direction: string;
   angle: number;
   showrobot: boolean;
+  wallMap: any;
 }
 
 const initialState: InputState = {
@@ -22,18 +23,13 @@ const initialState: InputState = {
   direction: "",
   angle: 0,
   showrobot: false,
+  wallMap: {},
 };
 
 export const inputSlice = createSlice({
   name: "input",
   initialState,
   reducers: {
-    // placeRobot: (state, action: PayloadAction<any>) => {
-    //   state.xCordinate = action.payload.x;
-    //   state.yCordinate = action.payload.y;
-    //   state.angle = 90;
-    // },
-
     setXOffset: (state, action: PayloadAction<any>) => {
       state.xCordinate = action.payload.xCordinate;
     },
@@ -59,6 +55,10 @@ export const inputSlice = createSlice({
       state.showrobot = action.payload.showRobot;
       state.angle = getAngleFromDirection(state.direction);
     },
+
+    setWallMap: (state, action: PayloadAction<any>) => {
+      state.wallMap = { ...state.wallMap, ...action.payload.newKey };
+    },
   },
 });
 
@@ -70,6 +70,7 @@ export const {
   setDirection,
   setAngle,
   setShowRobot,
+  setWallMap,
 } = inputSlice.actions;
 
 export default inputSlice.reducer;

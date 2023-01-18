@@ -1,7 +1,7 @@
 import React, { FC, } from "react"
 import { useDispatch,useSelector } from "react-redux";
 
-import { setRowNumber,setColNumber,setDirection,setAngle,setShowRobot,setXOffset,setYOffset } from "../redux/reducers/inputReducer";
+import { setRowNumber,setColNumber,setDirection,setAngle,setShowRobot,setXOffset,setYOffset ,setWallMap} from "../redux/reducers/inputReducer";
 import { RootState } from "../redux/store";
 
 
@@ -19,6 +19,10 @@ export const InputSection: FC<{}> = () => {
 
       const currentDirection = useSelector(
         (state: RootState) => state.placeRobot.direction
+      );
+
+      const wallMap = useSelector(
+        (state: RootState) => state.placeRobot.wallMap
       );
 
 
@@ -60,8 +64,12 @@ export const InputSection: FC<{}> = () => {
 
     };
 
-    const handleClick = (command: string,row?:number,column?:number) => {
+    const placeWall = (row?:number,col?:number,dir?:string,) => {
+        dispatch(setWallMap({newKey:{[`${row}-${col}`]:true}}))
+    };
 
+
+    const handleClick = (command: string,row?:number,column?:number) => {
 
         switch (command) {
           case "RIGHT":
@@ -72,7 +80,7 @@ export const InputSection: FC<{}> = () => {
             break;
 
              case "PLACE_WALL":
-                //placeWall(row,column)
+                placeWall(3,3)
               break;
 
               case "MOVE":
@@ -80,14 +88,12 @@ export const InputSection: FC<{}> = () => {
                  if(currentDirection==="NORTH"){
                   if(rowNumber===5){
 
-
                     placeRobot(1,colNumber)
                     setRow(1)
                   }
-                 //!wallMap[`${currentRow+1}-${currentColumn}`] &&
                   else{
-                    placeRobot(rowNumber+1,colNumber)
-                    setRow(rowNumber+1)
+                    !wallMap[`${rowNumber+1}-${colNumber}`] && placeRobot(rowNumber+1,colNumber)
+                    !wallMap[`${rowNumber+1}-${colNumber}`] && setRow(rowNumber+1)
 
                   }
 
@@ -99,11 +105,11 @@ export const InputSection: FC<{}> = () => {
                     placeRobot(5,colNumber)
                     setRow(5)
                   }
-                  //!wallMap[`${currentRow-1}-${currentColumn}`] &&
+
                   else{
 
-                    placeRobot(rowNumber-1,colNumber)
-                    setRow(rowNumber-1)
+                    !wallMap[`${rowNumber-1}-${colNumber}`] && placeRobot(rowNumber-1,colNumber)
+                    !wallMap[`${rowNumber-1}-${colNumber}`] &&  setRow(rowNumber-1)
 
                   }
 
@@ -116,11 +122,11 @@ export const InputSection: FC<{}> = () => {
                     placeRobot(rowNumber,1)
                     setCol(1)
                   }
-                  //!wallMap[`${currentRow}-${currentColumn + 1}`] &
+
                   else{
 
-                   placeRobot(rowNumber,colNumber+1)
-                   setCol(colNumber+1)
+                    !wallMap[`${rowNumber}-${colNumber + 1}`] && placeRobot(rowNumber,colNumber+1)
+                    !wallMap[`${rowNumber}-${colNumber + 1}`] && setCol(colNumber+1)
                   }
 
                 }
@@ -130,11 +136,11 @@ export const InputSection: FC<{}> = () => {
                     placeRobot(rowNumber,5)
                     setCol(5)
                   }
-                //   !wallMap[`${currentRow}-${currentColumn-1}`] &&
+
                   else{
 
-                    placeRobot(rowNumber,colNumber-1)
-                    setCol(colNumber-1)
+                    !wallMap[`${rowNumber}-${colNumber-1}`] && placeRobot(rowNumber,colNumber-1)
+                    !wallMap[`${rowNumber}-${colNumber-1}`] &&  setCol(colNumber-1)
                   }
 
                 }
@@ -168,6 +174,9 @@ export const InputSection: FC<{}> = () => {
             </div>
             <div style={{marginTop:"1em"}}>
                 <button style={{padding:"0.5em", border: 0, backgroundColor:"#6B5B95", color:"white"}} onClick={()=>handleClick("RIGHT")}>RIGHT</button>
+            </div>
+            <div style={{marginTop:"1em"}}>
+                <button style={{padding:"0.5em", border: 0, backgroundColor:"#6B5B95", color:"white"}} onClick={()=>handleClick("PLACE_WALL")}>PLACE WALL</button>
             </div>
             <div style={{marginTop:"1em"}}>
                 <button style={{padding:"0.5em", border: 0, backgroundColor:"#6B5B95", color:"white"}}>REPORT</button>

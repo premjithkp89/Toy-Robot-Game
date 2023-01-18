@@ -6,6 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import cell from '../images/cell.png';
+import brick from '../images/brick.png';
 import { RobotImg } from "../pages/robot/RobotImg";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -13,7 +14,6 @@ import { RootState } from "../redux/store";
 
 const useStyles = makeStyles({
     table: {
-      //minWidth: 650
       borderCollapse: 'separate',
       borderSpacing: '0px 4px',
       borderBottom: '5px solid white',
@@ -36,19 +36,18 @@ const getUniqueKeyFromArrayIndex = (rowNum: any, columnNum: any) => {
     return `${6-rowNum}-${6-columnNum}`;
   };
 
-const generateTable = () => {
+const generateTable = (wallMap:any) => {
     let table = [];
-    // Outer loop to create parent
     for (let i = 1; i < 6; i++) {
       let children = [];
-      //Inner loop to create children
       for (let j = 5; j > 0; j--) {
+          const bgImage = !wallMap[`${i}-${j}`] ? `url(${cell})` :`url(${brick})`
         children.push(
 
-          <td style={ {backgroundImage:`url(${cell})`, backgroundSize:'contain'}}>
+          <td >
             <div
               style={{
-
+                backgroundImage: bgImage, backgroundSize:'contain',
                 width: 80,
                 padding: "1px 1px",
                 height: 80,
@@ -87,13 +86,15 @@ const generateTable = () => {
         (state: RootState) => state.placeRobot.showrobot
       );
 
-      console.log("ROBOT",Xcordinate,Ycordinate,angle,showRobot)
+      const wallMap = useSelector(
+        (state: RootState) => state.placeRobot.wallMap
+      );
 
     return (
         <div>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
-              <TableBody>{generateTable()}</TableBody>
+              <TableBody>{generateTable(wallMap)}</TableBody>
             </Table>
             {showRobot && RobotImg(Xcordinate, Ycordinate,angle)}
           </TableContainer>
