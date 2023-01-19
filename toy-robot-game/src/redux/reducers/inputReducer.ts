@@ -4,31 +4,7 @@ import {
   getAngleFromDirection,
 } from "../../helpers/directionMapper";
 
-export interface InputState {
-  xCordinate: number;
-  yCordinate: number;
-  row: number;
-  column: number;
-  wallRow: number;
-  wallColumn: number;
-  direction: string;
-  angle: number;
-  showrobot: boolean;
-  wallMap: { [key: string]: boolean };
-}
-
-const initialState: InputState = {
-  xCordinate: 0,
-  yCordinate: 0,
-  row: -1,
-  column: -1,
-  wallRow: -1,
-  wallColumn: -1,
-  direction: "",
-  angle: 0,
-  showrobot: false,
-  wallMap: { "": false },
-};
+import { initialState } from "../../constants";
 
 export const inputSlice = createSlice({
   name: "input",
@@ -65,6 +41,9 @@ export const inputSlice = createSlice({
       state.showrobot = action.payload.showRobot;
       state.angle = getAngleFromDirection(state.direction);
     },
+    setShowReport: (state, action: PayloadAction<any>) => {
+      state.showReport = action.payload.showReport;
+    },
 
     setWallMap: (state, action: PayloadAction<any>) => {
       if (
@@ -84,6 +63,7 @@ export const {
   setDirection,
   setAngle,
   setShowRobot,
+  setShowReport,
   setWallMap,
   setWallRowNumber,
   setWallColNumber,

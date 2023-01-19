@@ -1,7 +1,6 @@
-import robot from "../../images/robot.png";
+import robot from "../images/robot.png";
 
 export const RobotImg = (x: any, y: any, angle: any) => {
-  console.log("position", x, y);
 
   return (
     <div

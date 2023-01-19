@@ -1,14 +1,14 @@
-import React, { FC } from "react";
-import { InputSection } from '../../components/commandInputs';
+
+import  CommandInput from '../../components/commandInputs';
 import GameBoard from '../../components/gameBoard'
 
-export const RobotApp: FC<{}> = () => {
+export const RobotApp = () => {
 
     return(
     <>
-        <div style={{display:"flex",flexDirection:'row',justifyContent: 'space-between'}}>
+        <div data-testid="robot" style={{display:"flex",flexDirection:'row',justifyContent: 'space-between'}}>
           <GameBoard />
-          <InputSection />
+          <CommandInput />
         </div>
     </>
     );

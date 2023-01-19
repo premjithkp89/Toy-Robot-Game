@@ -1,6 +1,6 @@
-import React, { FC } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import {
   COMMANDS,
   DIRECTIONS,
@@ -20,11 +20,12 @@ import {
   setWallMap,
   setWallRowNumber,
   setWallColNumber,
+  setShowReport,
 } from "../redux/reducers/inputReducer";
 import { RootState } from "../redux/store";
 import { useStyles } from "../styles/commandInputs.styles";
 
-export const InputSection: FC<{}> = () => {
+const CommandInput = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -45,6 +46,9 @@ export const InputSection: FC<{}> = () => {
   );
 
   const wallMap = useSelector((state: RootState) => state.placeRobot.wallMap);
+  const showReport = useSelector(
+    (state: RootState) => state.placeRobot.showReport
+  );
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "direction") {
@@ -61,15 +65,11 @@ export const InputSection: FC<{}> = () => {
   };
 
   const setRow = (row: number) => {
-
-      dispatch(setRowNumber({ row: row }));
-
+    dispatch(setRowNumber({ row: row }));
   };
 
   const setCol = (col: number) => {
-
-      dispatch(setColNumber({ col: col }));
-
+    dispatch(setColNumber({ col: col }));
   };
 
   const setWallRow = (row: number) => {
@@ -115,6 +115,11 @@ export const InputSection: FC<{}> = () => {
 
       case COMMANDS.PLACE_WALL:
         placeWall();
+        break;
+
+      case COMMANDS.REPORT:
+        if (rowNumber !== -1 && colNumber !== -1 && currentDirection)
+          dispatch(setShowReport({ showReport: true }));
         break;
 
       case COMMANDS.MOVE:
@@ -164,9 +169,9 @@ export const InputSection: FC<{}> = () => {
 
   return (
     <>
-      <div className={classes.container}>
-        <div className={classes.placeRobotContainer}>
-          <div>
+      <Box className={classes.container}>
+        <Box className={classes.placeRobotContainer}>
+          <Box>
             <InputCommands
               id={"rows"}
               label={"Rows"}
@@ -193,31 +198,37 @@ export const InputSection: FC<{}> = () => {
               value={currentDirection}
               onChange={onChangeInput}
             />
-          </div>
-          <div style={{ height: 0 }}>
+          </Box>
+          <Box data-testid="place-robot" style={{ height: 0 }}>
             <Button
               variant="outlined"
               size="medium"
               color="primary"
               onClick={onClickPlace}
-              disabled={rowNumber===-1 || colNumber===-1 || !currentDirection}
+              disabled={
+                rowNumber === -1 || colNumber === -1 || !currentDirection
+              }
             >
               PLACE ROBOT
             </Button>
-          </div>
-        </div>
-        <div className={classes.commandButtonContainer}>
+          </Box>
+        </Box>
+        <Box className={classes.commandButtonContainer}>
           <Button variant="contained" onClick={() => handleClick("LEFT")}>
             LEFT
           </Button>
           <Button variant="contained" onClick={() => handleClick("RIGHT")}>
             RIGHT
           </Button>
-          <Button variant="contained" onClick={() => handleClick("MOVE")}>
+          <Button
+            data-testid="move-robot"
+            variant="contained"
+            onClick={() => handleClick("MOVE")}
+          >
             MOVE
           </Button>
-        </div>
-        <div className={classes.placeRobotContainer}>
+        </Box>
+        <Box className={classes.placeRobotContainer}>
           <InputCommands
             id={"wall-rows"}
             label={"Row"}
@@ -234,26 +245,32 @@ export const InputSection: FC<{}> = () => {
             value={wallColNumber}
             onChange={onChangeInput}
           />
-          <div style={{ height: 0 }}>
+          <Box style={{ height: 0 }}>
             <Button
               variant="outlined"
               size="medium"
               color="primary"
-              disabled={wallRowNumber===-1 || wallColNumber===-1}
+              disabled={wallRowNumber === -1 || wallColNumber === -1}
               onClick={() => handleClick("PLACE_WALL")}
             >
               PLACE WALL
             </Button>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <Button variant="contained">REPORT</Button>
-        <div>
-          <Typography>ROW:{rowNumber} </Typography>
-          <Typography>COL:{colNumber}</Typography>
-          <Typography>FACING:{currentDirection}</Typography>
-        </div>
-      </div>
+        <Button variant="contained" onClick={() => handleClick("REPORT")}>
+          REPORT
+        </Button>
+        {showReport && (
+          <Box>
+            <Typography>ROW:{rowNumber} </Typography>
+            <Typography>COL:{colNumber}</Typography>
+            <Typography>FACING:{currentDirection}</Typography>
+          </Box>
+        )}
+      </Box>
     </>
   );
 };
+
+export default CommandInput;
