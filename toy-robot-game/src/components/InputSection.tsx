@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TextField, Button, Typography } from "@material-ui/core";
+import { Select, MenuItem, FormHelperText, FormControl, InputLabel } from '@material-ui/core';
 import {
   setRowNumber,
   setColNumber,
@@ -21,6 +22,11 @@ export const InputSection: FC<{}> = () => {
   const rowNumber = useSelector((state: RootState) => state.placeRobot.row);
 
   const colNumber = useSelector((state: RootState) => state.placeRobot.column);
+
+  const wallRowNumber = useSelector((state: RootState) => state.placeRobot.wallRow);
+
+  const wallColNumber = useSelector((state: RootState) => state.placeRobot.wallColumn);
+
 
 
   const currentDirection = useSelector(
@@ -135,7 +141,7 @@ export const InputSection: FC<{}> = () => {
     <>
       <div
         style={{
-          marginLeft: 10,
+          marginLeft: 50,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -150,27 +156,44 @@ export const InputSection: FC<{}> = () => {
           }}
         >
           <div>
-            <TextField
-              type="number"
-              placeholder="Row"
-              label=" Row Number"
-              onChange={(e) => setRow(Number(e.target.value))}
-            ></TextField>
-            <TextField
-              type="number"
-              placeholder="Column"
-              label=" Column Number"
-              onChange={(e) => setCol(Number(e.target.value))}
-            ></TextField>
-            <TextField
-              placeholder="Direction"
-              label="Enter facing Direction"
-              onChange={(e) => setDirections(e.target.value)}
-            ></TextField>
+    <FormControl required variant="outlined" style={{ marginRight: 10}}>
+      <InputLabel shrink>Rows</InputLabel>
+      <Select  label = 'Rows' value={rowNumber} onChange={(e=>setRow(Number(e.target.value)))} >
+        <MenuItem value={1}>1</MenuItem>
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={3}>3</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
+        <MenuItem value={5}>5</MenuItem>
+      </Select>
+      <FormHelperText>Select row</FormHelperText>
+    </FormControl>
+
+    <FormControl required variant="outlined" style={{ marginRight: 10}}>
+      <InputLabel shrink>Column</InputLabel>
+      <Select  label = 'Column' value={colNumber} onChange={(e=>setCol(Number(e.target.value)))} >
+        <MenuItem value={1}>1</MenuItem>
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={3}>3</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
+        <MenuItem value={5}>5</MenuItem>
+      </Select>
+      <FormHelperText>Select column</FormHelperText>
+    </FormControl>
+    <FormControl required variant="outlined" style={{ marginRight: 10}}>
+      <InputLabel shrink>Direction</InputLabel>
+      <Select label='Direction' value={currentDirection} onChange={(e=>setDirections(e.target.value))} >
+        <MenuItem value={'NORTH'}>NORTH</MenuItem>
+        <MenuItem value={'SOUTH'}>SOUTH</MenuItem>
+        <MenuItem value={'EAST'}>EAST</MenuItem>
+        <MenuItem value={'WEST'}>WEST</MenuItem>
+      </Select>
+      <FormHelperText>Select direction</FormHelperText>
+    </FormControl>
           </div>
-          <Button variant="contained" onClick={onClickPlace}>
+          <div style={{  height:0}}><Button variant="outlined" size='medium' color='primary'  onClick={onClickPlace}>
             PLACE ROBOT
-          </Button>
+          </Button></div>
+
         </div>
         <div
           style={{
@@ -198,22 +221,34 @@ export const InputSection: FC<{}> = () => {
             justifyContent: "space-between",
           }}
         >
-          <TextField
-            type="number"
-            placeholder="Row"
-            label=" Row Number"
-            onChange={(e) => setWallRow(Number(e.target.value))}
-          ></TextField>
-          <TextField
-            type="number"
-            placeholder="Column"
-            label=" Column Number"
-            onChange={(e) => setWallCol(Number(e.target.value))}
-          ></TextField>
-          <Button variant="contained" onClick={() => handleClick("PLACE_WALL")}>
+ <FormControl required variant="outlined" style={{ marginRight: 10}}>
+      <InputLabel shrink>Rows</InputLabel>
+      <Select  label = 'Rows' value={wallRowNumber} onChange={(e=>setWallRow(Number(e.target.value)))} >
+        <MenuItem value={1}>1</MenuItem>
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={3}>3</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
+        <MenuItem value={5}>5</MenuItem>
+      </Select>
+      <FormHelperText>Select row</FormHelperText>
+    </FormControl>
+
+    <FormControl required variant="outlined" style={{ marginRight: 10}}>
+      <InputLabel shrink>Column</InputLabel>
+      <Select  label = 'Column' value={wallColNumber} onChange={(e=>setWallCol(Number(e.target.value)))} >
+        <MenuItem value={1}>1</MenuItem>
+        <MenuItem value={2}>2</MenuItem>
+        <MenuItem value={3}>3</MenuItem>
+        <MenuItem value={4}>4</MenuItem>
+        <MenuItem value={5}>5</MenuItem>
+      </Select>
+      <FormHelperText>Select column</FormHelperText>
+    </FormControl>
+    <div style={{  height:0}}><Button variant="outlined" size='medium' color='primary'  onClick={()=>handleClick('PLACE_WALL')}>
             PLACE WALL
-          </Button>
+          </Button></div>
         </div>
+
         <Button variant="contained">REPORT</Button>
         <div>
            <Typography>ROW:{rowNumber} </Typography>
