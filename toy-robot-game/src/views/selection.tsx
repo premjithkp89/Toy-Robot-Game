@@ -17,7 +17,7 @@ interface ISelectionProps {
 }
 
 
- const InputCommnds: React.FC<ISelectionProps> = ({ id,onChange, children,label,value,values, ...props }) => {
+ const InputCommands: React.FC<ISelectionProps> = ({ id,onChange, children,label,value,values, ...props }) => {
 
     return ( <FormControl  required variant="outlined" style={{ marginRight: 10 }}>
     <InputLabel shrink>{label}</InputLabel>
@@ -33,4 +33,4 @@ const generateMenuItems=(values:number[] | string[])=>{
     return values.map(menu =><MenuItem value={menu}>{menu}</MenuItem> )
 }
 
-export default InputCommnds;
+export default InputCommands;

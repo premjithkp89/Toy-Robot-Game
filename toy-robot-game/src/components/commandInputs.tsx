@@ -8,7 +8,7 @@ import {
   COLUMN_VALUES,
   DIRECTION_VALUES,
 } from "../constants";
-import InputCommnds from "../views/selection";
+import InputCommands from "../views/selection";
 import {
   setRowNumber,
   setColNumber,
@@ -61,15 +61,15 @@ export const InputSection: FC<{}> = () => {
   };
 
   const setRow = (row: number) => {
-    if (rowNumber > 0 && rowNumber < 6) {
+
       dispatch(setRowNumber({ row: row }));
-    }
+
   };
 
   const setCol = (col: number) => {
-    if (colNumber > 0 && colNumber < 6) {
+
       dispatch(setColNumber({ col: col }));
-    }
+
   };
 
   const setWallRow = (row: number) => {
@@ -167,7 +167,7 @@ export const InputSection: FC<{}> = () => {
       <div className={classes.container}>
         <div className={classes.placeRobotContainer}>
           <div>
-            <InputCommnds
+            <InputCommands
               id={"rows"}
               label={"Rows"}
               values={ROW_VALUES}
@@ -175,14 +175,15 @@ export const InputSection: FC<{}> = () => {
               onChange={onChangeInput}
             />
 
-            <InputCommnds
+            <InputCommands
               id={"cols"}
               label={"Column"}
               values={COLUMN_VALUES}
               value={colNumber}
               onChange={onChangeInput}
             />
-            <InputCommnds
+
+            <InputCommands
               id={"direction"}
               label={"Direction"}
               values={DIRECTION_VALUES}
@@ -196,6 +197,7 @@ export const InputSection: FC<{}> = () => {
               size="medium"
               color="primary"
               onClick={onClickPlace}
+              disabled={rowNumber===-1 || colNumber===-1 || !currentDirection}
             >
               PLACE ROBOT
             </Button>
@@ -213,14 +215,14 @@ export const InputSection: FC<{}> = () => {
           </Button>
         </div>
         <div className={classes.placeRobotContainer}>
-          <InputCommnds
+          <InputCommands
             id={"wall-rows"}
             label={"Row"}
             values={ROW_VALUES}
             value={wallRowNumber}
             onChange={onChangeInput}
           />
-          <InputCommnds
+          <InputCommands
             id={"wall-cols"}
             label={"Column"}
             values={COLUMN_VALUES}
@@ -232,6 +234,7 @@ export const InputSection: FC<{}> = () => {
               variant="outlined"
               size="medium"
               color="primary"
+              disabled={wallRowNumber===-1 || wallColNumber===-1}
               onClick={() => handleClick("PLACE_WALL")}
             >
               PLACE WALL

@@ -1,4 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
+import left from "../images/left.png";
+import right from "../images/right.png";
+import move from "../images/move.png";
+
 export const useStyles = makeStyles((theme) => ({
   container: {
     marginLeft: 50,

@@ -18,12 +18,12 @@ export interface InputState {
 }
 
 const initialState: InputState = {
-  xCordinate: 1,
-  yCordinate: 1,
-  row: 1,
-  column: 1,
-  wallRow: 1,
-  wallColumn: 1,
+  xCordinate: 0,
+  yCordinate: 0,
+  row: -1,
+  column: -1,
+  wallRow: -1,
+  wallColumn: -1,
   direction: "",
   angle: 0,
   showrobot: false,
