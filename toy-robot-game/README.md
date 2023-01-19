@@ -119,3 +119,7 @@ LEFT
 MOVE
 REPORT
 # the app should print: 2,3,EAST
+
+<img width="867" alt="RobotApp_wall" src="https://user-images.githubusercontent.com/49518434/213586776-bac08d99-79c4-42e5-a3e6-26f53ac12312.PNG">
+<img width="921" alt="RobotApp" src="https://user-images.githubusercontent.com/49518434/213586781-735c8c65-2255-4fda-a47e-171450316f42.PNG">
+
