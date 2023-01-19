@@ -1,4 +1,5 @@
 import {
+    Box,
   Select,
   MenuItem,
   FormHelperText,
@@ -11,20 +12,21 @@ interface ISelectionProps {
     id:string;
     props?: any;
     label:string;
+    helperText:string;
     value: string|number;
     values:any[];
     onChange?: any
 }
 
 
- const InputCommands: React.FC<ISelectionProps> = ({ id,onChange, children,label,value,values, ...props }) => {
+ const InputCommands: React.FC<ISelectionProps> = ({ id,onChange, children,label,helperText,value,values, ...props }) => {
 
     return ( <FormControl  required variant="outlined" style={{ marginRight: 10 }}>
     <InputLabel shrink>{label}</InputLabel>
     <Select name={id}  label={label} value={value} onChange={onChange}>
    {generateMenuItems(values)}
     </Select>
-    <FormHelperText>Select row</FormHelperText>
+    <FormHelperText>{helperText}</FormHelperText>
   </FormControl>
     );
 };

@@ -170,6 +170,7 @@ export const InputSection: FC<{}> = () => {
             <InputCommands
               id={"rows"}
               label={"Rows"}
+              helperText={"Select row"}
               values={ROW_VALUES}
               value={rowNumber}
               onChange={onChangeInput}
@@ -178,6 +179,7 @@ export const InputSection: FC<{}> = () => {
             <InputCommands
               id={"cols"}
               label={"Column"}
+              helperText={"Select column"}
               values={COLUMN_VALUES}
               value={colNumber}
               onChange={onChangeInput}
@@ -186,6 +188,7 @@ export const InputSection: FC<{}> = () => {
             <InputCommands
               id={"direction"}
               label={"Direction"}
+              helperText={"Select direction"}
               values={DIRECTION_VALUES}
               value={currentDirection}
               onChange={onChangeInput}
@@ -218,6 +221,7 @@ export const InputSection: FC<{}> = () => {
           <InputCommands
             id={"wall-rows"}
             label={"Row"}
+            helperText={"Select row"}
             values={ROW_VALUES}
             value={wallRowNumber}
             onChange={onChangeInput}
@@ -225,6 +229,7 @@ export const InputSection: FC<{}> = () => {
           <InputCommands
             id={"wall-cols"}
             label={"Column"}
+            helperText={"Select column"}
             values={COLUMN_VALUES}
             value={wallColNumber}
             onChange={onChangeInput}

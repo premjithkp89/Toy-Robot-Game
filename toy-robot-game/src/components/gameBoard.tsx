@@ -1,5 +1,5 @@
 
-import{Paper,Table,TableBody,TableCell,TableContainer,TableRow} from "@material-ui/core/";
+import{Box,Paper,Table,TableBody,TableCell,TableContainer,TableRow} from "@material-ui/core/";
 import {getKeyFromIndex} from '../helpers/uniqueId';
 import cell from '../images/cell.png';
 import brick from '../images/brick.png';
@@ -21,7 +21,7 @@ const generateTable = (wallMap:any) => {
         children.push(
 
           <td style={{padding: '0px'}}>
-            <div
+            <Box
               style={{
                 backgroundImage: bgImage, backgroundSize:'contain',
                 width: 80,
@@ -30,7 +30,7 @@ const generateTable = (wallMap:any) => {
               }}
               id={getKeyFromIndex(i, j)}
               key={getKeyFromIndex(i, j)}
-            ></div>
+            ></Box>
           </td>
         );
       }
@@ -67,7 +67,7 @@ const generateTable = (wallMap:any) => {
       );
 
     return (
-        <div>
+        <Box>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableBody>{generateTable(wallMap)}</TableBody>
@@ -75,7 +75,7 @@ const generateTable = (wallMap:any) => {
             {showRobot && RobotImg(Xcordinate, Ycordinate,angle)}
           </TableContainer>
 
-        </div>
+        </Box>
       );
     };
   export default GameBoard
