@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { InputSection } from '../../components/InputSection';
+import { InputSection } from '../../components/commandInputs';
 import GameBoard from '../../components/gameBoard'
 
 export const RobotApp: FC<{}> = () => {

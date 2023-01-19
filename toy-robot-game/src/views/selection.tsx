@@ -6,18 +6,18 @@ import {
   InputLabel,
 } from "@material-ui/core";
 
-interface IButtonProps {
+interface ISelectionProps {
     children?: React.ReactNode;
     id:string;
     props?: any;
     label:string;
-    value:number;
+    value: string|number;
     values:any[];
     onChange?: any
 }
 
 
- const InputCommnds: React.FC<IButtonProps> = ({ id,onChange, children,label,value,values, ...props }) => {
+ const InputCommnds: React.FC<ISelectionProps> = ({ id,onChange, children,label,value,values, ...props }) => {
 
     return ( <FormControl  required variant="outlined" style={{ marginRight: 10 }}>
     <InputLabel shrink>{label}</InputLabel>

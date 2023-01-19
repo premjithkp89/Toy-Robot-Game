@@ -23,10 +23,3 @@ export const getAngleFromDirection = (direction: any): number => {
       return 90;
   }
 };
-
-export const getUniqueKeyFromArrayIndex = (
-  rowNum: any,
-  columnNum: any
-): string => {
-  return `${6 - rowNum}-${6 - columnNum}`;
-};

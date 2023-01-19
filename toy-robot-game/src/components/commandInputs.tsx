@@ -1,15 +1,14 @@
 import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Typography } from "@material-ui/core";
-import { COMMANDS, DIRECTIONS } from "../constants";
-import InputCommnds from "../views/selection";
 import {
-  Select,
-  MenuItem,
-  FormHelperText,
-  FormControl,
-  InputLabel,
-} from "@material-ui/core";
+  COMMANDS,
+  DIRECTIONS,
+  ROW_VALUES,
+  COLUMN_VALUES,
+  DIRECTION_VALUES,
+} from "../constants";
+import InputCommnds from "../views/selection";
 import {
   setRowNumber,
   setColNumber,
@@ -23,8 +22,10 @@ import {
   setWallColNumber,
 } from "../redux/reducers/inputReducer";
 import { RootState } from "../redux/store";
+import { useStyles } from "../styles/commandInputs.styles";
 
 export const InputSection: FC<{}> = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
 
   const rowNumber = useSelector((state: RootState) => state.placeRobot.row);
@@ -46,18 +47,17 @@ export const InputSection: FC<{}> = () => {
   const wallMap = useSelector((state: RootState) => state.placeRobot.wallMap);
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-if(e.target.name ==='rows'){
-    setRow(Number(e.target.value))
-}
-else if(e.target.name === 'wall-rows'){
-  setWallRow(Number(e.target.value))
-}
-else if(e.target.name === 'cols'){
-  setCol(Number(e.target.value))
-}
-else{
-  setWallCol(Number(e.target.value))
-}
+    if (e.target.name === "direction") {
+      setDirections(e.target.value);
+    } else if (e.target.name === "rows") {
+      setRow(Number(e.target.value));
+    } else if (e.target.name === "wall-rows") {
+      setWallRow(Number(e.target.value));
+    } else if (e.target.name === "cols") {
+      setCol(Number(e.target.value));
+    } else {
+      setWallCol(Number(e.target.value));
+    }
   };
 
   const setRow = (row: number) => {
@@ -164,56 +164,31 @@ else{
 
   return (
     <>
-      <div
-        style={{
-          marginLeft: 50,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <div
-          style={{
-            marginLeft: 10,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+      <div className={classes.container}>
+        <div className={classes.placeRobotContainer}>
           <div>
             <InputCommnds
-              id = {"rows"}
+              id={"rows"}
               label={"Rows"}
-              values={[1, 2, 3, 4, 5]}
+              values={ROW_VALUES}
               value={rowNumber}
               onChange={onChangeInput}
             />
 
-          <InputCommnds
-              id = {"cols"}
+            <InputCommnds
+              id={"cols"}
               label={"Column"}
-              values={[1, 2, 3, 4, 5]}
+              values={COLUMN_VALUES}
               value={colNumber}
               onChange={onChangeInput}
             />
-            <FormControl
-              required
-              variant="outlined"
-              style={{ marginRight: 10 }}
-            >
-              <InputLabel shrink>Direction</InputLabel>
-              <Select
-                label="Direction"
-                value={currentDirection}
-                onChange={(e) => setDirections(e.target.value)}
-              >
-                <MenuItem value={DIRECTIONS.NORTH}>NORTH</MenuItem>
-                <MenuItem value={DIRECTIONS.SOUTH}>SOUTH</MenuItem>
-                <MenuItem value={DIRECTIONS.EAST}>EAST</MenuItem>
-                <MenuItem value={DIRECTIONS.WEST}>WEST</MenuItem>
-              </Select>
-              <FormHelperText>Select direction</FormHelperText>
-            </FormControl>
+            <InputCommnds
+              id={"direction"}
+              label={"Direction"}
+              values={DIRECTION_VALUES}
+              value={currentDirection}
+              onChange={onChangeInput}
+            />
           </div>
           <div style={{ height: 0 }}>
             <Button
@@ -226,14 +201,7 @@ else{
             </Button>
           </div>
         </div>
-        <div
-          style={{
-            marginLeft: 10,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className={classes.commandButtonContainer}>
           <Button variant="contained" onClick={() => handleClick("LEFT")}>
             LEFT
           </Button>
@@ -244,28 +212,21 @@ else{
             MOVE
           </Button>
         </div>
-        <div
-          style={{
-            marginLeft: 10,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className={classes.placeRobotContainer}>
           <InputCommnds
-              id = {"wall-rows"}
-              label={"Row"}
-              values={[1, 2, 3, 4, 5]}
-              value={wallRowNumber}
-              onChange={onChangeInput}
-            />
-            <InputCommnds
-              id = {"wall-cols"}
-              label={"Column"}
-              values={[1, 2, 3, 4, 5]}
-              value={wallColNumber}
-              onChange={onChangeInput}
-            />
+            id={"wall-rows"}
+            label={"Row"}
+            values={ROW_VALUES}
+            value={wallRowNumber}
+            onChange={onChangeInput}
+          />
+          <InputCommnds
+            id={"wall-cols"}
+            label={"Column"}
+            values={COLUMN_VALUES}
+            value={wallColNumber}
+            onChange={onChangeInput}
+          />
           <div style={{ height: 0 }}>
             <Button
               variant="outlined"

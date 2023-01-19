@@ -1,33 +1,23 @@
-import { makeStyles } from "@material-ui/core/styles";
+
 import{Paper,Table,TableBody,TableCell,TableContainer,TableRow} from "@material-ui/core/";
-import {getUniqueKeyFromArrayIndex} from '../helpers/directionMapper';
+import {getKeyFromIndex} from '../helpers/uniqueId';
 import cell from '../images/cell.png';
 import brick from '../images/brick.png';
-import { RobotImg } from "../pages/robot/RobotImg";
+import { RobotImg } from '../pages/robot/RobotImg';
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from '../redux/store';
+import { useStyles } from "../styles/gameBoard.styles";
+import {ROW_COUNT,COL_COUNT} from '../constants'
 
-
-const useStyles = makeStyles({
-    table: {
-      borderCollapse: 'collapse',
-      borderSpacing: '0px 4px',
-      borderBottom: '5px solid white',
-      rowGap:'1em',
-      backgroundColor:'white'
-
-    },
-
-  });
 
 
 const generateTable = (wallMap:any) => {
-    console.log("")
-    let table = [];
-    for (let i = 1; i < 6; i++) {
+    let gameTable = [];
+    const MAX_COLS = COL_COUNT +1
+    for (let i = 1; i < MAX_COLS; i++) {
       let children = [];
-      for (let j = 5; j > 0; j--) {
-          const bgImage = wallMap[`${6-i}-${6-j}`]===true ? `url(${brick})`: `url(${cell})`
+      for (let j = ROW_COUNT; j > 0; j--) {
+          const bgImage = wallMap[`${MAX_COLS-i}-${MAX_COLS-j}`]===true ? `url(${brick})`: `url(${cell})`
         children.push(
 
           <td style={{padding: '0px'}}>
@@ -38,19 +28,19 @@ const generateTable = (wallMap:any) => {
                 padding: "1px 1px",
                 height: 80,
               }}
-              id={getUniqueKeyFromArrayIndex(i, j)}
-              key={getUniqueKeyFromArrayIndex(i, j)}
+              id={getKeyFromIndex(i, j)}
+              key={getKeyFromIndex(i, j)}
             ></div>
           </td>
         );
       }
-      table.push(
+      gameTable.push(
         <TableRow  key={i} >
           <TableCell style={{padding: '0px'}}>{children}</TableCell>
         </TableRow>
       );
     }
-    return table;
+    return gameTable;
   };
 
 
