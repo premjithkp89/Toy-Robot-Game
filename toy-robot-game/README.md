@@ -10,6 +10,8 @@ A Robot that moves on 5x5 table top.
 
 4. Run it by command `yarn start`
 
+5 To test Run the command 'yarn test' from the project folder
+
 
 
 Description
