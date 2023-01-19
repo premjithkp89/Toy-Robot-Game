@@ -9,10 +9,12 @@ export interface InputState {
   yCordinate: number;
   row: number;
   column: number;
+  wallRow: number;
+  wallColumn: number;
   direction: string;
   angle: number;
   showrobot: boolean;
-  wallMap: any;
+  wallMap: { [key: string]: boolean };
 }
 
 const initialState: InputState = {
@@ -20,10 +22,12 @@ const initialState: InputState = {
   yCordinate: 1,
   row: 1,
   column: 1,
+  wallRow: 1,
+  wallColumn: 1,
   direction: "",
   angle: 0,
   showrobot: false,
-  wallMap: {},
+  wallMap: { "": false },
 };
 
 export const inputSlice = createSlice({
@@ -42,6 +46,12 @@ export const inputSlice = createSlice({
     setColNumber: (state, action: PayloadAction<any>) => {
       state.column = action.payload.col;
     },
+    setWallRowNumber: (state, action: PayloadAction<any>) => {
+      state.wallRow = action.payload.wallRow;
+    },
+    setWallColNumber: (state, action: PayloadAction<any>) => {
+      state.wallColumn = action.payload.wallCol;
+    },
     setDirection: (state, action: PayloadAction<any>) => {
       state.direction = action.payload.direction;
       state.angle = getAngleFromDirection(action.payload.direction);
@@ -57,7 +67,11 @@ export const inputSlice = createSlice({
     },
 
     setWallMap: (state, action: PayloadAction<any>) => {
-      state.wallMap = { ...state.wallMap, ...action.payload.newKey };
+      if (
+        `${state.row}-${state.column}` !==
+        `${state.wallRow}-${state.wallColumn}`
+      )
+        state.wallMap[`${state.wallRow}-${state.wallColumn}`] = true;
     },
   },
 });
@@ -71,6 +85,8 @@ export const {
   setAngle,
   setShowRobot,
   setWallMap,
+  setWallRowNumber,
+  setWallColNumber,
 } = inputSlice.actions;
 
 export default inputSlice.reducer;

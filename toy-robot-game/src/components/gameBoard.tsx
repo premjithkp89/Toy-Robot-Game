@@ -1,10 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import{Paper,Table,TableBody,TableCell,TableContainer,TableRow} from "@material-ui/core/";
+import {getUniqueKeyFromArrayIndex} from '../helpers/directionMapper';
 import cell from '../images/cell.png';
 import brick from '../images/brick.png';
 import { RobotImg } from "../pages/robot/RobotImg";
@@ -14,37 +10,27 @@ import { RootState } from "../redux/store";
 
 const useStyles = makeStyles({
     table: {
-      borderCollapse: 'separate',
+      borderCollapse: 'collapse',
       borderSpacing: '0px 4px',
       borderBottom: '5px solid white',
       rowGap:'1em',
-      backgroundColor:'gray'
+      backgroundColor:'white'
 
     },
 
   });
 
-  interface BoardProps{
-    showRobot:boolean;
-    x:number;
-    y:number;
-    angle:number;
-  }
-
-const getUniqueKeyFromArrayIndex = (rowNum: any, columnNum: any) => {
-
-    return `${6-rowNum}-${6-columnNum}`;
-  };
 
 const generateTable = (wallMap:any) => {
+    console.log("")
     let table = [];
     for (let i = 1; i < 6; i++) {
       let children = [];
       for (let j = 5; j > 0; j--) {
-          const bgImage = !wallMap[`${i}-${j}`] ? `url(${cell})` :`url(${brick})`
+          const bgImage = wallMap[`${6-i}-${6-j}`]===true ? `url(${brick})`: `url(${cell})`
         children.push(
 
-          <td >
+          <td style={{padding: '0px'}}>
             <div
               style={{
                 backgroundImage: bgImage, backgroundSize:'contain',
@@ -59,8 +45,8 @@ const generateTable = (wallMap:any) => {
         );
       }
       table.push(
-        <TableRow key={i} >
-          <TableCell >{children}</TableCell>
+        <TableRow  key={i} >
+          <TableCell style={{padding: '0px'}}>{children}</TableCell>
         </TableRow>
       );
     }
